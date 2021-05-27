@@ -164,7 +164,8 @@ class Launcher(object):
                 signal.signal(signal.SIGHUP, _close_process)
 
         connectionDelay = self.slowMo
-        await asyncio.sleep(connectionDelay / 1000)
+        if connectionDelay:
+            await asyncio.sleep(connectionDelay)
         self.browserWSEndpoint = get_ws_endpoint(self.url)
         logger.info(f'Browser listening on: {self.browserWSEndpoint}')
         self.connection = Connection(self.browserWSEndpoint, self._loop, connectionDelay, )
